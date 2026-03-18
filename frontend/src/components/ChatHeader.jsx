@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
-import { useAuthStore } from "../store/useAuthStore";
-import { useChatStore } from "../store/useChatStore";
+import { useAuthStore } from "../store/useAuth.Store";
+import { useChatStore } from "../store/useChat.Store";
 
 const ChatHeader = () => {
   const { selectedUser, setSelectedUser } = useChatStore();

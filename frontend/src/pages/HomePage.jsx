@@ -1,4 +1,4 @@
-import { useChatStore } from "../store/useChatStore";
+import { useChatStore } from "../store/useChat.Store.js";
 
 import Sidebar from "../components/sidebar";
 import NoChatSelected from "../components/NoChatSelected";
