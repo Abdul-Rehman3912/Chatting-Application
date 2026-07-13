@@ -31,6 +31,7 @@ const SidebarSkeleton = () => {
       </div>
     </aside>
   );
+  
 };
 
 export default SidebarSkeleton;

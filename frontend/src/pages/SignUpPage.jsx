@@ -138,10 +138,6 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-
-      {/* right side */}
-
-
     </div>
   );
 };

@@ -12,7 +12,10 @@ const ChatHeader = () => {
         <div className="flex items-center gap-3">
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
+              <img
+                src={selectedUser.profilePic || "/avatar.png"}
+                alt={selectedUser.fullName}
+              />
             </div>
           </div>
 
@@ -31,4 +34,5 @@ const ChatHeader = () => {
     </div>
   );
 };
+
 export default ChatHeader;
