@@ -1,13 +1,13 @@
 import { useRef, useState } from "react";
 import { useChatStore } from "../Store/useChat.Store.js";
-import { Image, Send, X } from "lucide-react";
+import { Image, Send, X, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, isMessagesLoading } = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -38,7 +38,6 @@ const MessageInput = () => {
         image: imagePreview,
       });
 
-      // Clear form
       setText("");
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -85,17 +84,30 @@ const MessageInput = () => {
             ref={fileInputRef}
             onChange={handleImageChange}
           />
+
+          <button
+            type="button"
+            className={`hidden sm:flex btn btn-circle
+                     ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`}
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Image size={20} />
+          </button>
         </div>
-        <button
-          type="submit"
-          className="btn btn-sm btn-circle"
-          disabled={!text.trim() && !imagePreview}
-        >
-          <Send size={22} />
-        </button>
+
+        {isMessagesLoading ? (
+          <Loader2 className="animate-spin size-5" />
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-sm btn-circle"
+            disabled={!text.trim() && !imagePreview}
+          >
+            <Send size={22} />
+          </button>
+        )}
       </form>
     </div>
   );
 };
-
 export default MessageInput;
