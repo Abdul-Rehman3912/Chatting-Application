@@ -5,7 +5,7 @@ import cors from "cors";
 import path from "path";
 
 import { connectDB } from "./lib/db.js";
-import authRoutes from "./Routes/auth.routes.js";
+import authRoutes from "./Routes/auth.routes.js"; 
 import messageRoutes from "./Routes/message.route.js";
 import { app, server } from "./lib/socket.js";
 
@@ -15,6 +15,9 @@ app.use(
   cors({
     origin: ["http://localhost:5173", "https://chatting-application-ivory.vercel.app"],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    optionsSuccessStatus: 200 
   })
 );
 
@@ -22,20 +25,22 @@ app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 
-app.use(async (req, res, next) => {
-  try {
-    await connectDB(); 
-    next();
-  } catch (error) {
-    res.status(500).json({ message: "Database connection failed", error: error.message });
-  }
-});
-
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5001;
 
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    console.log("Database connected successfully");
+    server.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
