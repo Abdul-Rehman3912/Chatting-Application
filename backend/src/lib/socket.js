@@ -1,3 +1,4 @@
+// socket.js
 import { Server } from "socket.io";
 import http from "http";
 import express from "express";
@@ -7,12 +8,22 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://chatting-application-ivory.vercel.app"],
+    origin: [
+      "http://localhost:5173", 
+      "https://chatting-application-ivory.vercel.app"
+    ],
     credentials: true,
+    methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    transports: ['websocket', 'polling'] // Add this
   },
+  // Add these options for better compatibility
+  allowEIO3: true,
+  pingTimeout: 60000,
 });
 
 const userSocketMap = {}; 
+
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
@@ -47,7 +58,6 @@ io.on("connection", (socket) => {
     const targetSocketId = getReceiverSocketId(to) || to;
     io.to(targetSocketId).emit("ice-candidate", { candidate });
   });
-
 
   socket.on("end-call", ({ to }) => {
     const targetSocketId = getReceiverSocketId(to) || to;
