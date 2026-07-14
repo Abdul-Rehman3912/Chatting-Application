@@ -13,14 +13,16 @@
     "axios": "^1.9.0",
     "chatting-application": "file:..",
     "lucide-react": "^0.508.0",
+    "process": "^0.11.10",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.13.1",
+    "simple-peer": "^9.11.1",
     "socket.io-client": "^4.8.1",
+    "vite-plugin-node-polyfills": "^0.28.0",
     "zustand": "^5.0.12"
   },
-  
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",

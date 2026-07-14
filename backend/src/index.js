@@ -22,7 +22,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173","http://192.168.18.7:5173"],
     credentials: true,
   }),
 );
@@ -42,6 +42,6 @@ app.use("/api/messages", messageRoutes);
 
 
 
-server.listen(PORT, () => {
-  console.log("server is running on PORT:" + PORT);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server is running on port ${PORT}`);
 });
