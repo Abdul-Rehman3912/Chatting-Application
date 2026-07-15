@@ -94,9 +94,9 @@ useEffect(() => {
   return (
     <div className="flex-1 flex flex-col overflow-auto relative bg-base-100">
       <ChatHeader onStartCall={handleStartCall} />
-
+ 
       {call?.isReceivingCall && !activeCall && (
-        <div className="absolute top-16 left-1/2 -translate-x-1/2 bg-base-100 border border-base-300 shadow-2xl rounded-2xl p-4 flex items-center gap-6 z-50 w-11/12 max-w-md animate-bounce">
+        <div className="absolute top-16 bg-base-100 border border-base-300 shadow-2xl rounded-2xl p-4 flex items-center gap-6 z-50 w-11/12 max-w-md animate-bounce">
           <div className="flex-1">
             <span className="badge badge-primary text-xs font-semibold mb-1">
               INCOMING {call.callType?.toUpperCase()} CALL
@@ -105,7 +105,7 @@ useEffect(() => {
               {call.name || "Someone"} is calling you...
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <button
               onClick={handleAcceptCall}
               className="btn btn-success btn-sm btn-circle text-green-600 shadow-md"
