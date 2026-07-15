@@ -6,18 +6,28 @@ import express from "express";
 const app = express();
 const server = http.createServer(app);
 
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && ['http://localhost:5173', 'https://chatting-application-ivory.vercel.app'].includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:5173", 
-      "https://chatting-application-ivory.vercel.app"
-    ],
+    origin: ["http://localhost:5173", "https://chatting-application-ivory.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    transports: ['websocket', 'polling'] // Add this
+    transports: ['websocket', 'polling']
   },
-  // Add these options for better compatibility
   allowEIO3: true,
   pingTimeout: 60000,
 });
