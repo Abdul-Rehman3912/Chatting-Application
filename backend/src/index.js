@@ -19,6 +19,8 @@ app.use(
       "https://chatting-application-nmc9222lr-abdul-rehman2661s-projects.vercel.app",
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
   }),
 );
 
