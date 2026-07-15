@@ -1,6 +1,7 @@
-import { X, Phone, Video } from "lucide-react";
+import { Phone, Video, ArrowLeft } from "lucide-react"; // ArrowLeft import kiya
 import { useAuthStore } from "../Store/useAuth.Store.js";
 import { useChatStore } from "../Store/useChat.Store.js";
+import { X } from "lucide-react"
 
 const ChatHeader = ({ onStartCall }) => {
   const { selectedUser, setSelectedUser } = useChatStore();
@@ -12,7 +13,16 @@ const ChatHeader = ({ onStartCall }) => {
   return (
     <div className="p-2.5 border-b border-base-300 bg-base-100">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          
+          {/* Mobile Back Button: Sirf mobile par dikhega, Click karne par user list wapas layega */}
+          <button
+            onClick={() => setSelectedUser(null)}
+            className="btn btn-ghost btn-circle btn-sm md:hidden mr-1"
+          >
+            <ArrowLeft size={20} />
+          </button>
+
           <div className="avatar">
             <div className="size-10 rounded-full relative">
               <img
@@ -73,9 +83,10 @@ const ChatHeader = ({ onStartCall }) => {
             />
           </button>
 
+          {/* Desktop Close Button: Ab yeh button mobile par hidden hoga kyunki left par Back Arrow aa gaya hai */}
           <button
             onClick={() => setSelectedUser(null)}
-            className="btn btn-ghost btn-circle btn-sm text-error ml-2"
+            className="hidden md:flex btn btn-ghost btn-circle btn-sm text-error ml-2"
           >
             <X size={18} />
           </button>
