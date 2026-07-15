@@ -8,13 +8,19 @@ const server = http.createServer(app);
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (origin && ['http://localhost:5173', 'https://chatting-application-ivory.vercel.app'].includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+  if (
+    origin &&
+    [
+      "http://localhost:5173",
+      "https://chatting-application-ivory.vercel.app",
+    ].includes(origin)
+  ) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
   }
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
   next();
@@ -22,17 +28,21 @@ app.use((req, res, next) => {
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:5173", "https://chatting-application-ivory.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://chatting-application-ivory.vercel.app",
+      "https://chatting-application-nmc9222lr-abdul-rehman2661s-projects.vercel.app",
+    ],
     credentials: true,
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    transports: ['websocket', 'polling']
+    transports: ["websocket", "polling"],
   },
   allowEIO3: true,
   pingTimeout: 60000,
 });
 
-const userSocketMap = {}; 
+const userSocketMap = {};
 
 export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
@@ -49,13 +59,13 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Object.keys(userSocketMap));
 
   socket.on("call-user", ({ to, offer, from, type, name }) => {
-    const receiverSocketId = getReceiverSocketId(to); 
+    const receiverSocketId = getReceiverSocketId(to);
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit("incoming-call", { 
-        from, 
-        name, 
-        offer, 
-        type 
+      io.to(receiverSocketId).emit("incoming-call", {
+        from,
+        name,
+        offer,
+        type,
       });
     }
   });

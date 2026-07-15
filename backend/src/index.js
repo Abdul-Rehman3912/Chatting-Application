@@ -14,7 +14,8 @@ const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
       'http://localhost:5173',
-      'https://chatting-application-ivory.vercel.app'
+      'https://chatting-application-ivory.vercel.app',
+      'https://chatting-application-nmc9222lr-abdul-rehman2661s-projects.vercel.app'
     ];
     
     // Allow requests with no origin (like mobile apps or curl requests)
